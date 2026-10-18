@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Pixel Planetarium — Sistema Solar 2D</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Canvas Principal do Planetário -->
+  <canvas id="planetarium"></canvas>
+
+  <!-- Cabeçalho / Título Retrô -->
+  <header class="hud-panel hud-header">
+    <div class="title-block">
+      <span class="pixel-badge">8-BIT ASTRO OS v1.0</span>
+      <h1>MINI PIXEL PLANETARIUM</h1>
+    </div>
+    <div class="hud-hint">
+      <span>[CLIQUE] Inspecionar Astro</span>
+      <span>[ARRASTAR] Mover Câmera</span>
+      <span>[SCROLL] Zoom</span>
+    </div>
+  </header>
+
+  <!-- Barra de Controles Inferior (HUD) -->
+  <section class="hud-panel hud-controls" aria-label="Controles do Planetário">
+    <!-- Controle de Velocidade do Tempo -->
+    <div class="control-group">
+      <label for="speed-slider" class="control-label">
+        VELOCIDADE DO TEMPO: <strong id="speed-display">1x</strong>
+      </label>
+      <div class="speed-row">
+        <input
+          type="range"
+          id="speed-slider"
+          min="0"
+          max="50"
+          step="0.5"
+          value="1"
+        />
+        <div class="preset-buttons">
+          <button type="button" class="pixel-btn preset-btn" data-speed="0">PAUSAR</button>
+          <button type="button" class="pixel-btn preset-btn active" data-speed="1">1x</button>
+          <button type="button" class="pixel-btn preset-btn" data-speed="5">5x</button>
+          <button type="button" class="pixel-btn preset-btn" data-speed="10">10x</button>
+          <button type="button" class="pixel-btn preset-btn" data-speed="50">50x</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hud-divider"></div>
+
+    <!-- Botões de Visualização -->
+    <div class="control-group">
+      <span class="control-label">VISUALIZAÇÃO</span>
+      <div class="toggle-buttons">
+        <button type="button" id="toggle-orbits" class="pixel-btn active">ÓRBITAS: ON</button>
+        <button type="button" id="toggle-labels" class="pixel-btn active">NOMES: ON</button>
+        <button type="button" id="toggle-trails" class="pixel-btn active">RASTRO: ON</button>
+        <button type="button" id="toggle-pluto" class="pixel-btn active">PLUTÃO: ON</button>
+      </div>
+    </div>
+
+    <div class="hud-divider"></div>
+
+    <!-- Controles de Câmera -->
+    <div class="control-group">
+      <span class="control-label">CÂMERA</span>
+      <div class="camera-buttons">
+        <button type="button" id="zoom-out" class="pixel-btn" title="Diminuir Zoom">-</button>
+        <span id="zoom-display" class="zoom-readout">100%</span>
+        <button type="button" id="zoom-in" class="pixel-btn" title="Aumentar Zoom">+</button>
+        <button type="button" id="reset-camera" class="pixel-btn accent">RESETAR CÂMERA</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card / Modal Retrô de Informações do Astro -->
+  <aside id="info-card" class="hud-panel info-card hidden" aria-live="polite">
+    <div class="card-header">
+      <div class="card-title-group">
+        <span id="card-type" class="pixel-tag">PLANETA</span>
+        <h2 id="card-name">TERRA</h2>
+      </div>
+      <button type="button" id="close-card" class="pixel-btn close-btn" title="Fechar">X</button>
+    </div>
+
+    <div class="card-preview-wrapper">
+      <canvas id="card-preview" width="64" height="64"></canvas>
+      <div class="following-indicator">
+        <span class="blink-dot"></span> CÂMERA TRAVADA NO ASTRO
+      </div>
+    </div>
+
+    <div class="card-stats">
+      <div class="stat-row">
+        <span class="stat-label">DISTÂNCIA DO SOL:</span>
+        <span id="card-distance" class="stat-value">1,00 UA (149,6 mi km)</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">TRANSLAÇÃO (ANO):</span>
+        <span id="card-period" class="stat-value">365,25 dias terrestres</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">TEMPERATURA MÉDIA:</span>
+        <span id="card-temp" class="stat-value">15 °C</span>
+      </div>
+    </div>
+
+    <div class="card-fact-box">
+      <span class="fact-title">★ CURIOSIDADE CIENTÍFICA:</span>
+      <p id="card-fact">
+        A Terra é o único planeta do Sistema Solar cujo nome não vem da mitologia greco-romana.
+      </p>
+    </div>
+  </aside>
+
+  <script src="planetarium.js"></script>
+</body>
+</html>

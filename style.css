@@ -1,0 +1,429 @@
+/* ==========================================================================
+   MINI PIXEL PLANETARIUM — ESTILOS RETRÔ & PIXEL ART (ZERO DEPENDENCIES)
+   ========================================================================== */
+
+:root {
+  --bg-space: #060713;
+  --panel-bg: rgba(11, 15, 34, 0.92);
+  --panel-border: #3b5dc9;
+  --panel-highlight: #73eff7;
+  --panel-shadow: #1a1c2c;
+  --text-main: #f4f4f4;
+  --text-muted: #94b0c2;
+  --accent-gold: #ffcd75;
+  --accent-orange: #ef7d57;
+  --accent-green: #38b764;
+  --font-pixel: "Courier New", Courier, "Lucida Console", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-space);
+  color: var(--text-main);
+  font-family: var(--font-pixel);
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   CANVAS PIXELADO RETRÔ
+   ========================================================================== */
+#planetarium {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  cursor: grab;
+  /* Garante que o navegador não borre os pixels ao escalar */
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#planetarium:active {
+  cursor: grabbing;
+}
+
+/* ==========================================================================
+   MOLDURAS E PAINÉIS HUD EM PIXEL ART
+   ========================================================================== */
+.hud-panel {
+  position: fixed;
+  background: var(--panel-bg);
+  /* Borda escalonada estilo 8-bit usando múltiplos box-shadows */
+  border: 2px solid var(--panel-highlight);
+  box-shadow:
+    0 0 0 2px var(--panel-shadow),
+    0 0 0 4px var(--panel-border),
+    0 6px 0 4px rgba(0, 0, 0, 0.65);
+  z-index: 10;
+}
+
+/* Cabeçalho Superior */
+.hud-header {
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  pointer-events: none; /* Permite clicar no espaço através de áreas vazias */
+}
+
+.title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pixel-badge {
+  background: var(--panel-border);
+  color: var(--accent-gold);
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 7px;
+  border: 1px solid var(--panel-highlight);
+  letter-spacing: 1px;
+}
+
+.hud-header h1 {
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--panel-highlight);
+  text-shadow: 2px 2px 0 var(--panel-shadow);
+}
+
+.hud-hint {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.hud-hint span {
+  background: rgba(26, 28, 44, 0.8);
+  padding: 3px 8px;
+  border: 1px solid #29366f;
+}
+
+/* ==========================================================================
+   BARRA DE CONTROLES INFERIOR
+   ========================================================================== */
+.hud-controls {
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: calc(100vw - 32px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+.control-label strong {
+  color: var(--accent-gold);
+}
+
+.speed-row,
+.toggle-buttons,
+.camera-buttons,
+.preset-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hud-divider {
+  width: 2px;
+  height: 38px;
+  background: var(--panel-border);
+  box-shadow: 1px 0 0 var(--panel-shadow);
+}
+
+/* Slider de Velocidade Customizado em Pixel Art */
+#speed-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 8px;
+  background: #1a1c2c;
+  border: 2px solid var(--panel-border);
+  outline: none;
+  cursor: pointer;
+}
+
+#speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 18px;
+  background: var(--accent-gold);
+  border: 2px solid #ffffff;
+  box-shadow: 2px 2px 0 #000000;
+  cursor: pointer;
+}
+
+#speed-slider::-moz-range-thumb {
+  width: 14px;
+  height: 18px;
+  background: var(--accent-gold);
+  border: 2px solid #ffffff;
+  border-radius: 0;
+  box-shadow: 2px 2px 0 #000000;
+  cursor: pointer;
+}
+
+/* Botões Retrô 8-Bit */
+.pixel-btn {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--text-main);
+  background: #29366f;
+  border: 2px solid #566c86;
+  box-shadow: 0 3px 0 #1a1c2c;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: transform 0.05s, background-color 0.1s;
+}
+
+.pixel-btn:hover {
+  background: #3b5dc9;
+  border-color: var(--panel-highlight);
+}
+
+.pixel-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #1a1c2c;
+}
+
+.pixel-btn.active {
+  background: var(--accent-green);
+  border-color: #a7f070;
+  color: #0b0f22;
+}
+
+.pixel-btn.accent {
+  background: var(--accent-orange);
+  border-color: var(--accent-gold);
+  color: #1a1c2c;
+}
+
+.pixel-btn.accent:hover {
+  background: var(--accent-gold);
+}
+
+.zoom-readout {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--panel-highlight);
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   CARD / MODAL DE INFORMAÇÕES DO ASTRO
+   ========================================================================== */
+.info-card {
+  top: 84px;
+  right: 20px;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.info-card.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px dashed var(--panel-border);
+  padding-bottom: 10px;
+}
+
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pixel-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--accent-gold);
+  background: #29366f;
+  padding: 2px 6px;
+  border: 1px solid var(--panel-highlight);
+  width: fit-content;
+}
+
+.card-header h2 {
+  font-size: 20px;
+  color: var(--panel-highlight);
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.close-btn {
+  background: #b13e53;
+  border-color: #ef7d57;
+  padding: 4px 8px;
+}
+
+.close-btn:hover {
+  background: #ef7d57;
+}
+
+/* Miniatura em Pixel Art do Planeta Selecionado */
+.card-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, #141b3d 0%, #060713 100%);
+  border: 2px solid #29366f;
+  padding: 10px;
+  gap: 8px;
+}
+
+#card-preview {
+  width: 84px;
+  height: 84px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.following-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--accent-green);
+  letter-spacing: 0.5px;
+}
+
+.blink-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent-green);
+  display: inline-block;
+  animation: pixelBlink 1s steps(2, start) infinite;
+}
+
+@keyframes pixelBlink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Dados Científicos */
+.card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(6, 7, 19, 0.65);
+  padding: 10px;
+  border: 1px solid #29366f;
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--accent-gold);
+}
+
+/* Curiosidade Científica */
+.card-fact-box {
+  background: #141b3d;
+  border: 2px solid var(--panel-border);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fact-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--panel-highlight);
+}
+
+#card-fact {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-main);
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 820px) {
+  .hud-hint {
+    display: none;
+  }
+
+  .hud-divider {
+    display: none;
+  }
+
+  .hud-controls {
+    bottom: 10px;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .info-card {
+    top: 70px;
+    right: 10px;
+    width: 280px;
+  }
+}
